@@ -1,0 +1,24 @@
+{
+  "name": "chaibackend",
+  "version": "1.0.0",
+  "description": "A basic app to deploy",
+  "keywords": [
+    "node",
+    "chai"
+  ],
+  "homepage": "https://github.com/va4unsingh/HiteshSir-youtube-backend#readme",
+  "bugs": {
+    "url": "https://github.com/va4unsingh/HiteshSir-youtube-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/va4unsingh/HiteshSir-youtube-backend.git"
+  },
+  "license": "ISC",
+  "author": "Varun Singh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+  "start": "node index.js"
+  }
+}
