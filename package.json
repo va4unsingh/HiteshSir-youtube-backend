@@ -16,9 +16,13 @@
   },
   "license": "ISC",
   "author": "Varun Singh",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-  "start": "node index.js"
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
   }
 }
