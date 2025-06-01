@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // ✅ Get list of 5 jokes
-app.get("/jokes", (req, res) => {
+app.get("/api/jokes", (req, res) => {
   const jokes = [
     {
       id: 1,
