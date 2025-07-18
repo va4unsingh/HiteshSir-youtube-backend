@@ -6,7 +6,7 @@ const patientSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    diagonsedWith: {
+    diagnosedWith: {
       type: String,
       required: true,
     },
