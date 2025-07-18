@@ -1,6 +1,4 @@
 import dotenv from "dotenv";
-// import mongoose from "mongoose";
-// import { DB_NAME } from "./constants.js";
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
@@ -22,23 +20,9 @@ const port = process.env.PORT || 3000;
   }
 })();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
-
+import mongoose from "mongoose";
+import { DB_NAME } from "./constants.js";
 import express from "express";
 const app = express();
 const port = process.env.PORT || 3000;
@@ -62,5 +46,4 @@ try {
     throw error;
   }
 })();
-
 */
