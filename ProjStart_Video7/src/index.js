@@ -8,17 +8,15 @@ dotenv.config({
 
 const port = process.env.PORT || 3000;
 
-(async () => {
-  try {
-    await connectDB();
+connectDB()
+  .then(() => {
     app.listen(port, () => {
       console.log(`Server is running at port ${port}`);
     });
-  } catch (error) {
+  })
+  .catch((err) => {
     console.error("MONGO DB connection failed !!", err);
-    process.exit(1);
-  }
-})();
+  });
 
 /*
 import mongoose from "mongoose";
