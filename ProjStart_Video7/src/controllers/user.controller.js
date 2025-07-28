@@ -4,6 +4,10 @@ import { User } from "../models/user.models.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiRes } from "../utils/ApiRes.js";
 import jwt from "jsonwebtoken";
+import {
+  deleteFromCloudinary,
+  extractPublicId,
+} from "../utils/deleteFromCloudinary.js";
 
 const generateAccessAndRefreshTokes = async (userId) => {
   try {
@@ -267,7 +271,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(200, req.user, "Current user fetched Successfully");
+    .json(new ApiRes(200, req.user, "Current user fetched Successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -300,9 +304,17 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Avatar file is missing");
   }
 
+  // Get current user to access old avatar URL
+  const currentUser = await User.findById(req.user?._id);
+
+  if (!currentUser) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // TODO: delete old image - assignment
   const avatar = await uploadOnCloudinary(avatarLocalPath);
 
-  if (!avatar.url) {
+  if (!avatar?.url) {
     throw new ApiError(400, "Error while uploading avatar");
   }
 
@@ -315,6 +327,22 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     },
     { new: true },
   ).select("-password");
+
+  // Delete old image from Cloudinary if it exists
+  if (currentUser?.avatar) {
+    try {
+      const publicId = extractPublicId(currentUser.avatar);
+
+      if (publicId) {
+        await deleteFromCloudinary(publicId);
+      } else {
+        console.log("Could not extract publicId from URL:", currentUser.avatar);
+      }
+    } catch (error) {
+      // Log error but don't fail the request
+      console.error("Failed to delete old avatar (non-fatal):", error.message);
+    }
+  }
 
   return res
     .status(200)
