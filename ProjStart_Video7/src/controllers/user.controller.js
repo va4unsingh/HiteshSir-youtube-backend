@@ -270,6 +270,8 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     .json(200, req.user, "Current user fetched Successfully");
 });
 
+const updateAccountDetails = asyncHandler(async (req, res) => {});
+
 export {
   registerUser,
   loginUser,
