@@ -8,6 +8,7 @@ import {
   deleteFromCloudinary,
   extractPublicId,
 } from "../utils/deleteFromCloudinary.js";
+import mongoose from "mongoose";
 
 const generateAccessAndRefreshTokes = async (userId) => {
   try {
@@ -450,7 +451,42 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     .json(new ApiRes(200, channel[0], "User channel fetched successfully"));
 });
 
-const getWatchHistory = asyncHandler(async (req, res) => {});
+const getWatchHistory = asyncHandler(async (req, res) => {
+  const user = await User.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(req.user._id),
+      },
+    },
+    {
+      $lookup: {
+        from: "videos",
+        localField: "watchHistory",
+        foreignField: "_id",
+        as: "watchHistory",
+        pipeline: [
+          {
+            $lookup: {
+              from: "users",
+              localField: "onwer",
+              foreignField: "_id",
+              as: "onwer",
+              pipeline: [
+                {
+                  $project: {
+                    fullName: 1,
+                    username: 1,
+                    avatar: 1,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]);
+});
 
 export {
   registerUser,
