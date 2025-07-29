@@ -450,6 +450,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     .json(new ApiRes(200, channel[0], "User channel fetched successfully"));
 });
 
+const getWatchHistory = asyncHandler(async (req, res) => {});
+
 export {
   registerUser,
   loginUser,
@@ -461,4 +463,5 @@ export {
   updateUserAvatar,
   updateUserCoverImage,
   getUserChannelProfile,
+  getWatchHistory,
 };
